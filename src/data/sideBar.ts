@@ -1,6 +1,7 @@
 import assets from '@/assets';
 
 // this comment has nothing to do with the code
+// testing
 
 const sideBarContent = [
   {

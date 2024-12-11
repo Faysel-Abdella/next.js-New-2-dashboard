@@ -1,5 +1,0 @@
-{
-  "/(pages)/admin/(01홈)/home/dashboard/page": "app/(pages)/admin/(01홈)/home/dashboard/page.js",
-  "/(pages)/admin/(01홈)/home/comprehensive-indicator/page": "app/(pages)/admin/(01홈)/home/comprehensive-indicator/page.js",
-  "/(pages)/admin/(04필터 관리)/filter-management/page": "app/(pages)/admin/(04필터 관리)/filter-management/page.js"
-}

@@ -1,10 +1,12 @@
-'use client';
+'use client'; // Ensures this component is rendered client-side in Next.js
 
-import Image from 'next/image';
-import CommonHeader from '@/components/CommonHeader';
-import { useState } from 'react';
-import assets from '@/assets';
+// Importing necessary modules and components
+import Image from 'next/image'; // Image handling in Next.js
+import CommonHeader from '@/components/CommonHeader'; // Custom header component
+import { useState } from 'react'; // React hook for state management
+import assets from '@/assets'; // Assets (like images) to be used
 
+// NextUI Modal components and elements to create modals for category/item management
 import {
   Modal,
   ModalContent,
@@ -15,130 +17,153 @@ import {
   Button,
 } from '@nextui-org/react';
 
+// Interface to define the structure of a FilterCategory
 interface FilterCategory {
   id: string;
   name: string;
-  items: string[];
+  items: string[]; // Array of items in the category
 }
 
 const FilterManagement = () => {
+  // ****************** State Management *******************
+
+  // This state keeps track of the language setting (for toggling between middle and high school language)
   const [higherLanguage, setHigherLanguage] = useState(true);
 
-  const [categories, setCategories] = useState<FilterCategory[]>([]);
-  const [isAddingCategory, setIsAddingCategory] = useState(false);
-  const [isAddingItem, setIsAddingItem] = useState<string | null>(null);
+  //! States for managing categories and items
+  const [categories, setCategories] = useState<FilterCategory[]>([]); // Store categories (empty array initially)
+  const [isAddingCategory, setIsAddingCategory] = useState(false); // Boolean state for modal visibility (Add Category)
   const [isEditingCategory, setIsEditingCategory] = useState<string | null>(
     null
-  );
-  const [isEditingItem, setIsEditingItem] = useState<{
-    categoryId: string;
-    itemIndex: number;
-  } | null>(null);
-  const [newItemValue, setNewItemValue] = useState('');
+  ); // State for the category being edited
 
+  //! States for managing items
+  const [isAddingItem, setIsAddingItem] = useState<string | null>(null); // Boolean state for modal visibility (Add Item)
+  const [isEditingItem, setIsEditingItem] = useState<{
+    categoryId: string; // Category ID to identify which category item belongs to
+    itemIndex: number; // Index of the item in the category
+  } | null>(null); // State for the item being edited
+
+  // !State for both category and item temporal data
+  const [newItemValue, setNewItemValue] = useState(''); // State for the input field to store new item or category value
+
+  // ****************** Handlers for Managing Categories and Items *******************
+
+  // Function to handle adding a new category
   const handleAddCategory = () => {
     if (newItemValue.trim()) {
       setCategories([
-        ...categories,
+        // Add the new category to the state
+        ...categories, // Spread existing categories
         {
-          id: Date.now().toString(),
-          name: newItemValue.trim(),
-          items: [],
+          id: Date.now().toString(), // Create a unique ID based on current timestamp
+          name: newItemValue.trim(), // Set the category name
+          items: [], // Initialize with an empty items array
         },
       ]);
-      setNewItemValue('');
-      setIsAddingCategory(false);
+      setNewItemValue(''); // Clear the input field
+      setIsAddingCategory(false); // Close the modal
     }
   };
 
+  // Function to handle adding a new item to a specific category
   const handleAddItem = (categoryId: string) => {
     if (newItemValue.trim()) {
       setCategories(
+        // Update the categories state
         categories.map((category) => {
           if (category.id === categoryId) {
             return {
-              ...category,
-              items: [...category.items, newItemValue.trim()],
+              ...category, // Spread existing category
+              items: [...category.items, newItemValue.trim()], // Add the new item to the category's items list
             };
           }
-          return category;
+          return category; // Keep other categories unchanged
         })
       );
-      setNewItemValue('');
-      setIsAddingItem(null);
+      setNewItemValue(''); // Clear input field
+      setIsAddingItem(null); // Close the modal
     }
   };
 
+  // Function to handle editing a category
   const handleEditCategory = () => {
     if (isEditingCategory && newItemValue.trim()) {
       setCategories(
+        // Update the category name
         categories.map((category) => {
           if (category.id === isEditingCategory) {
             return {
               ...category,
-              name: newItemValue.trim(),
+              name: newItemValue.trim(), // Update the category name
             };
           }
-          return category;
+          return category; // Keep other categories unchanged
         })
       );
-      setNewItemValue('');
-      setIsEditingCategory(null);
+      setNewItemValue(''); // Clear the input field
+      setIsEditingCategory(null); // Close the edit mode
     }
   };
 
+  // Function to handle editing an item
   const handleEditItem = () => {
     if (isEditingItem && newItemValue.trim()) {
       setCategories(
+        // Update the item name
         categories.map((category) => {
           if (category.id === isEditingItem.categoryId) {
-            const newItems = [...category.items];
-            newItems[isEditingItem.itemIndex] = newItemValue.trim();
+            const newItems = [...category.items]; // Copy existing items array
+            newItems[isEditingItem.itemIndex] = newItemValue.trim(); // Replace the item at the specific index
             return {
               ...category,
-              items: newItems,
+              items: newItems, // Update the category's items list
             };
           }
-          return category;
+          return category; // Keep other categories unchanged
         })
       );
-      setNewItemValue('');
-      setIsEditingItem(null);
+      setNewItemValue(''); // Clear the input field
+      setIsEditingItem(null); // Close the edit mode
     }
   };
 
+  // Function to handle deleting a category
   const handleDeleteCategory = () => {
     if (isEditingCategory) {
       setCategories(
-        categories.filter((category) => category.id !== isEditingCategory)
+        // Remove the category from the state
+        categories.filter((category) => category.id !== isEditingCategory) // Filter out the category being deleted
       );
-      setIsEditingCategory(null);
+      setIsEditingCategory(null); // Close the edit mode
     }
   };
 
+  // Function to handle deleting an item from a category
   const handleDeleteItem = () => {
     if (isEditingItem) {
       setCategories(
+        // Remove the item from the category
         categories.map((category) => {
           if (category.id === isEditingItem.categoryId) {
             return {
               ...category,
               items: category.items.filter(
+                // Remove item by index
                 (_, index) => index !== isEditingItem.itemIndex
               ),
             };
           }
-          return category;
+          return category; // Keep other categories unchanged
         })
       );
-      setIsEditingItem(null);
+      setIsEditingItem(null); // Close the edit mode
     }
   };
 
   return (
     <section>
-      <CommonHeader title='필터 항목 관리 ********************' />
-      <p className='text-black'>test</p>
+      <CommonHeader title='필터 항목 관리' />
       <header>
         <div className='flex items-center gap-1 bg-bgGray p-1 rounded-lg '>
           <button
@@ -169,40 +194,43 @@ const FilterManagement = () => {
           <Image src={assets.addNew} alt='Add new item' />
         </Button>
       </div>
-
+      {/* Display Categories and Items */}
       <div className='mt-3'>
         {categories.map((category) => (
           <div
             key={category.id}
-            className='flex items-center gap-4 border-1 border-grayLightBorder border-collapse '
+            className='flex items-center gap-4 border-1 border-grayLightBorder border-collapse'
           >
             <div className='flex items-center gap-2'>
+              {/* Button to edit the category */}
               <Button
-                className='rounded-none px-5 text-center border-r border-grayLightBorder py-6  font-bold text-secondGray bg-bgGray'
+                className='rounded-none px-5 text-center border-r border-grayLightBorder py-6 font-bold text-secondGray bg-bgGray'
                 onClick={() => {
-                  setIsEditingCategory(category.id);
-                  setNewItemValue(category.name);
+                  setIsEditingCategory(category.id); // Open edit mode for category
+                  setNewItemValue(category.name); // Set the category name to input field
                 }}
               >
                 <p>{category.name}</p>
               </Button>
             </div>
             <div className='flex flex-wrap gap-4'>
+              {/* Display items in the category */}
               {category.items.map((item, index) => (
-                <div key={index} className='flex items-center '>
+                <div key={index} className='flex items-center'>
                   <button
                     onClick={() => {
                       setIsEditingItem({
                         categoryId: category.id,
                         itemIndex: index,
-                      });
-                      setNewItemValue(item);
+                      }); // Open edit mode for item
+                      setNewItemValue(item); // Set item value to input field
                     }}
                   >
                     <p className='text-secondGray'>{item}</p>
                   </button>
                 </div>
               ))}
+              {/* Button to add a new item */}
               <button onClick={() => setIsAddingItem(category.id)}>
                 <Image src={assets.borderedAddNew} alt='Add sub category' />
               </button>
@@ -255,7 +283,7 @@ const FilterManagement = () => {
           </ModalBody>
           <ModalFooter>
             <button
-              color='primary'
+              className='bg-mainBlack text-white py-2 px-4 rounded-md'
               onClick={() => isAddingItem && handleAddItem(isAddingItem)}
             >
               등록
@@ -279,11 +307,17 @@ const FilterManagement = () => {
             />
           </ModalBody>
           <ModalFooter>
-            <button color='primary' onClick={handleEditCategory}>
-              수정 ****
-            </button>
-            <button color='danger' onClick={handleDeleteCategory}>
+            <button
+              className='bg-[#ECEDF1] text-[#ED3D2E] py-2 px-4 rounded-md'
+              onClick={handleDeleteCategory}
+            >
               삭제
+            </button>
+            <button
+              className='bg-mainBlack mx-1 text-white py-2 px-4 rounded-md'
+              onClick={handleEditCategory}
+            >
+              수정
             </button>
           </ModalFooter>
         </ModalContent>
@@ -301,12 +335,18 @@ const FilterManagement = () => {
             />
           </ModalBody>
           <ModalFooter>
-            <div>
-              <button onClick={handleEditItem}>수정</button>
-              <button color='danger' onClick={handleDeleteItem}>
-                삭제 *****
-              </button>
-            </div>
+            <button
+              className='bg-bgGray text-[#ED3D2E] py-2 px-4 rounded-md'
+              onClick={handleDeleteItem}
+            >
+              삭제
+            </button>
+            <button
+              className='bg-mainBlack mx-1 text-white py-2 px-4 rounded-md'
+              onClick={handleEditItem}
+            >
+              수정
+            </button>
           </ModalFooter>
         </ModalContent>
       </Modal>

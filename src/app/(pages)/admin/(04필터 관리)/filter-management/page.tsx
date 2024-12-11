@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import CommonHeader from "@/components/CommonHeader";
-import { useState } from "react";
-import assets from "@/assets";
+import Image from 'next/image';
+import CommonHeader from '@/components/CommonHeader';
+import { useState } from 'react';
+import assets from '@/assets';
 
 import {
   Modal,
@@ -13,7 +13,7 @@ import {
   ModalFooter,
   Input,
   Button,
-} from "@nextui-org/react";
+} from '@nextui-org/react';
 
 interface FilterCategory {
   id: string;
@@ -34,7 +34,7 @@ const FilterManagement = () => {
     categoryId: string;
     itemIndex: number;
   } | null>(null);
-  const [newItemValue, setNewItemValue] = useState("");
+  const [newItemValue, setNewItemValue] = useState('');
 
   const handleAddCategory = () => {
     if (newItemValue.trim()) {
@@ -46,7 +46,7 @@ const FilterManagement = () => {
           items: [],
         },
       ]);
-      setNewItemValue("");
+      setNewItemValue('');
       setIsAddingCategory(false);
     }
   };
@@ -64,7 +64,7 @@ const FilterManagement = () => {
           return category;
         })
       );
-      setNewItemValue("");
+      setNewItemValue('');
       setIsAddingItem(null);
     }
   };
@@ -82,7 +82,7 @@ const FilterManagement = () => {
           return category;
         })
       );
-      setNewItemValue("");
+      setNewItemValue('');
       setIsEditingCategory(null);
     }
   };
@@ -102,7 +102,7 @@ const FilterManagement = () => {
           return category;
         })
       );
-      setNewItemValue("");
+      setNewItemValue('');
       setIsEditingItem(null);
     }
   };
@@ -137,18 +137,18 @@ const FilterManagement = () => {
 
   return (
     <section>
-      <CommonHeader title="필터 항목 관리" />
-
-      <header className="flex items-center justify-between ">
-        <div className="flex items-center gap-1 bg-bgGray p-1 rounded-lg ">
+      <CommonHeader title='필터 항목 관리 ********************' />
+      <p className='text-black'>test</p>
+      <header>
+        <div className='flex items-center gap-1 bg-bgGray p-1 rounded-lg '>
           <button
-            className={`font-bold px-3 py-2 ${higherLanguage ? " bg-white text-mainBlue rounded-lg" : "bg-transparent text-secondGray"}`}
+            className={`font-bold px-3 py-2 ${higherLanguage ? ' bg-white text-mainBlue rounded-lg' : 'bg-transparent text-secondGray'}`}
             onClick={() => setHigherLanguage(true)}
           >
             고등 국어
           </button>
           <button
-            className={`font-bold px-3 py-2 ${!higherLanguage ? " bg-white text-mainBlue rounded-lg" : "bg-transparent text-secondGray"}`}
+            className={`font-bold px-3 py-2 ${!higherLanguage ? ' bg-white text-mainBlue rounded-lg' : 'bg-transparent text-secondGray'}`}
             onClick={() => setHigherLanguage(false)}
           >
             중학 국어
@@ -156,29 +156,29 @@ const FilterManagement = () => {
         </div>
       </header>
 
-      <div className="mt-5 flex items-center gap-3">
-        <h3 className="font-bold text-xl text-mainBlack">
+      <div className='mt-5 flex items-center gap-3'>
+        <h3 className='font-bold text-xl text-mainBlack'>
           고등국어(모의고사 자료)
         </h3>
         <Button
-          className="flex items-center gap-2 px-3 py-2 border-2 border-grayLightBorder rounded text-secondGray"
+          className='flex items-center gap-2 px-3 py-2 border-2 border-grayLightBorder rounded text-secondGray'
           onPress={() => setIsAddingCategory(true)}
-          variant="light"
+          variant='light'
         >
           <p>추가</p>
-          <Image src={assets.addNew} alt="Add new item" />
+          <Image src={assets.addNew} alt='Add new item' />
         </Button>
       </div>
 
-      <div className="mt-3">
+      <div className='mt-3'>
         {categories.map((category) => (
           <div
             key={category.id}
-            className="flex items-center gap-4 border-1 border-grayLightBorder border-collapse "
+            className='flex items-center gap-4 border-1 border-grayLightBorder border-collapse '
           >
-            <div className="flex items-center gap-2">
+            <div className='flex items-center gap-2'>
               <Button
-                className="rounded-none px-5 text-center border-r border-grayLightBorder py-6  font-bold text-secondGray bg-bgGray"
+                className='rounded-none px-5 text-center border-r border-grayLightBorder py-6  font-bold text-secondGray bg-bgGray'
                 onClick={() => {
                   setIsEditingCategory(category.id);
                   setNewItemValue(category.name);
@@ -187,9 +187,9 @@ const FilterManagement = () => {
                 <p>{category.name}</p>
               </Button>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className='flex flex-wrap gap-4'>
               {category.items.map((item, index) => (
-                <div key={index} className="flex items-center ">
+                <div key={index} className='flex items-center '>
                   <button
                     onClick={() => {
                       setIsEditingItem({
@@ -199,12 +199,12 @@ const FilterManagement = () => {
                       setNewItemValue(item);
                     }}
                   >
-                    <p className="text-secondGray">{item}</p>
+                    <p className='text-secondGray'>{item}</p>
                   </button>
                 </div>
               ))}
               <button onClick={() => setIsAddingItem(category.id)}>
-                <Image src={assets.borderedAddNew} alt="Add sub category" />
+                <Image src={assets.borderedAddNew} alt='Add sub category' />
               </button>
             </div>
           </div>
@@ -215,25 +215,25 @@ const FilterManagement = () => {
       <Modal
         isOpen={isAddingCategory}
         onClose={() => setIsAddingCategory(false)}
-        className="py-10 px-3"
+        className='py-10 px-3'
       >
         <ModalContent>
           <ModalHeader>
-            <h3 className="font-bold text-3xl text-center">항목 추가</h3>
+            <h3 className='font-bold text-3xl text-center'>항목 추가</h3>
           </ModalHeader>
-          <ModalBody className="mt-5">
+          <ModalBody className='mt-5'>
             <Input
-              placeholder="새 항목"
-              variant="bordered"
-              radius="sm"
-              size="lg"
+              placeholder='새 항목'
+              variant='bordered'
+              radius='sm'
+              size='lg'
               value={newItemValue}
               onChange={(e) => setNewItemValue(e.target.value)}
             />
           </ModalBody>
-          <ModalFooter className="flex items-center justify-center">
+          <ModalFooter className='flex items-center justify-center'>
             <button
-              className="bg-mainBlack text-white py-2 px-4 rounded-md"
+              className='bg-mainBlack text-white py-2 px-4 rounded-md'
               onClick={handleAddCategory}
             >
               등록
@@ -248,14 +248,14 @@ const FilterManagement = () => {
           <ModalHeader>새부항목 추가</ModalHeader>
           <ModalBody>
             <Input
-              placeholder="새부항목"
+              placeholder='새부항목'
               value={newItemValue}
               onChange={(e) => setNewItemValue(e.target.value)}
             />
           </ModalBody>
           <ModalFooter>
             <button
-              color="primary"
+              color='primary'
               onClick={() => isAddingItem && handleAddItem(isAddingItem)}
             >
               등록
@@ -273,16 +273,16 @@ const FilterManagement = () => {
           <ModalHeader>항목 수정</ModalHeader>
           <ModalBody>
             <Input
-              placeholder="항목 이름"
+              placeholder='항목 이름'
               value={newItemValue}
               onChange={(e) => setNewItemValue(e.target.value)}
             />
           </ModalBody>
           <ModalFooter>
-            <button color="primary" onClick={handleEditCategory}>
-              수정
+            <button color='primary' onClick={handleEditCategory}>
+              수정 ****
             </button>
-            <button color="danger" onClick={handleDeleteCategory}>
+            <button color='danger' onClick={handleDeleteCategory}>
               삭제
             </button>
           </ModalFooter>
@@ -295,14 +295,18 @@ const FilterManagement = () => {
           <ModalHeader>새부항목 수정</ModalHeader>
           <ModalBody>
             <Input
-              placeholder="새부항목 이름"
+              placeholder='새부항목 이름'
               value={newItemValue}
               onChange={(e) => setNewItemValue(e.target.value)}
             />
           </ModalBody>
           <ModalFooter>
-            <button onClick={handleEditItem}>수정</button>
-            <button onClick={handleDeleteItem}>삭제</button>
+            <div>
+              <button onClick={handleEditItem}>수정</button>
+              <button color='danger' onClick={handleDeleteItem}>
+                삭제 *****
+              </button>
+            </div>
           </ModalFooter>
         </ModalContent>
       </Modal>

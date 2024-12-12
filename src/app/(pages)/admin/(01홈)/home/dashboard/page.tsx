@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const HomeDashboard = () => {
   return (
     <div>
-      <p>test</p>
+      <h1 className="text-mainBlack font-bold text-center">In Progress</h1>
     </div>
   );
 };

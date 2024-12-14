@@ -721,40 +721,6 @@ const HomeIndicator = () => {
           </div>
         </div>
       </main>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        className='bg-white rounded-xl'
-        size='md'
-      >
-        <ModalContent>
-          <ModalBody className='p-6'>
-            <div className='space-y-6'>
-              <h3 className='text-xl font-bold text-center'>기간 설정</h3>
-
-              <div className='flex items-center justify-center gap-2'>
-                <div className='flex items-center'>
-                  <InputNoLabel type='date' />
-                  <p className='px-3'>~</p>
-                  <InputNoLabel type='date' />
-                </div>
-                <button className='p-2 border border-gray-200 rounded-lg hover:bg-gray-50'>
-                  <IoReload className='text-gray-400' />
-                </button>
-              </div>
-
-              <div className='flex justify-center'>
-                <Button
-                  className='bg-[#2B2D36] text-white px-8 rounded-lg'
-                  onClick={handleSubmit}
-                >
-                  확인
-                </Button>
-              </div>
-            </div>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </section>
   );
 };

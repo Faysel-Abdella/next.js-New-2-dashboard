@@ -13,38 +13,23 @@ import {
   DateRangePicker,
 } from '@nextui-org/react';
 import { useState } from 'react';
+import InputNoLabel from '@/components/InputNoLabel';
+import CalendarButton from './CalanderButton';
 
 const HomeIndicator = () => {
+  const [higherLanguage, setHigherLanguage] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [activeCalendarIndex, setActiveCalendarIndex] = useState<number | null>(
-  //   null
-  // );
-  // const [dateRanges, setDateRanges] = useState<DateRange[]>(
-  //   Array(4).fill({ from: undefined, to: undefined })
-  // );
+  const [isDateSet, setIsDateSet] = useState(false);
 
   const handleOpenModal = () => {
-    // setActiveCalendarIndex(index);
     setIsModalOpen(true);
   };
 
-  // const handleDateChange = (dateRange: DateRange) => {
-  //   if (activeCalendarIndex !== null) {
-  //     const newDateRanges = [...dateRanges];
-  //     newDateRanges[activeCalendarIndex] = dateRange;
-  //     setDateRanges(newDateRanges);
-  //   }
-  // };
-
-  // const handleReset = () => {
-  //   if (activeCalendarIndex !== null) {
-  //     const newDateRanges = [...dateRanges];
-  //     newDateRanges[activeCalendarIndex] = { from: undefined, to: undefined };
-  //     setDateRanges(newDateRanges);
-  //   }
-  // };
-  const [higherLanguage, setHigherLanguage] = useState(true);
-
+  const handleSubmit = () => {
+    // Update state to indicate a date has been set
+    setIsDateSet(true);
+    setIsModalOpen(false);
+  };
   return (
     <section>
       <CommonHeader title='전체 회원 관리' />
@@ -173,13 +158,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1, 2, 3].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  // onClick={() => handleOpenModal(index)}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -249,13 +228,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1, 2, 3].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -326,13 +299,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -401,13 +368,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1, 2, 3, 4, 5, 6, 7].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -465,13 +426,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -528,13 +483,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -591,13 +540,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -654,13 +597,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1, 3].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -720,13 +657,7 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
@@ -784,60 +715,12 @@ const HomeIndicator = () => {
           <div className='w-[160px] self-stretch   text-center'>
             <div className='flex flex-col gap-2'>
               {[0, 1, 2, 3].map((index) => (
-                <button
-                  key={index}
-                  className='w-[160px] self-stretch flex items-center justify-center py-2'
-                  onClick={() => handleOpenModal()}
-                >
-                  <FaCalendar className='text-gray-400' />
-                </button>
+                <CalendarButton key={index} index={index} />
               ))}
             </div>
           </div>
         </div>
       </main>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        className='bg-white rounded-xl'
-        size='md'
-      >
-        <ModalContent>
-          <ModalBody className='p-6'>
-            <div className='space-y-6'>
-              <h3 className='text-xl font-bold text-center'>기간 설정</h3>
-
-              <div className='flex items-center justify-center gap-2'>
-                <DateRangePicker
-                  // value={
-                  //   activeCalendarIndex !== null
-                  //     ? dateRanges[activeCalendarIndex]
-                  //     : undefined
-                  // }
-                  // onValueChange={handleDateChange}
-                  className='max-w-full'
-                />
-                <button
-                  // onClick={handleReset}
-                  className='p-2 border border-gray-200 rounded-lg hover:bg-gray-50'
-                >
-                  <IoReload className='text-gray-400' />
-                </button>
-              </div>
-
-              <div className='flex justify-center'>
-                <Button
-                  className='bg-[#2B2D36] text-white px-8 rounded-lg'
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  확인
-                </Button>
-              </div>
-            </div>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </section>
   );
 };
